@@ -22,7 +22,11 @@ Your goal as DevOps is to package the static application/game and deploy it to G
      npx gh-pages -d <build_dir>
      ```
      (e.g., `npx gh-pages -d dist` or `npx gh-pages -d build`) from the **Build Target Directory**.
-   - **Method B (GitHub Actions)**: Create/configure a GitHub Actions workflow in `.github/workflows/deploy.yml` to automatically build and deploy the application when pushed to the main branch.
+   - **Method B (GitHub Actions)**: Create/configure a GitHub Actions workflow in `.github/workflows/deploy.yml` to automatically build and deploy the application when pushed to the main branch. 
+     **CRITICAL GITHUB ACTIONS RULES:**
+     1. Set `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true` in the workflow `env` and use `actions/setup-node@v4` with `node-version: 22` (or 24) to avoid Node 20 deprecation failures.
+     2. Use `actions/configure-pages@v5`.
+     3. ALWAYS use `run: npm install` (NOT `npm ci`) in the CI pipeline if the local `package-lock.json` was generated on a Windows host, as `npm ci` strictly enforces the lockfile and will crash on Ubuntu runners due to missing OS-specific optional dependencies (like `@emnapi/core`).
 
 4. **Report**:
    - Output the live production GitHub Pages URL (e.g., `https://<username>.github.io/<repository-name>`) and instruct the user to push to Git or verify the deployed site.

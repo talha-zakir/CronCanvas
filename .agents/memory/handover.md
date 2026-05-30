@@ -30,13 +30,12 @@ This file serves as the persistent memory for the Antigravity development team. 
 - **Row-Level Handle Connections**: Outgoing connection lines originate directly from the specific property key row's handle (`sourceHandle`) inside parent cards, rather than central node points. This maps exactly which nested object belongs to which key.
 - **Row-Level Collapse Triggers**: Expand/collapse toggle buttons (`+` / `−`) are placed directly next to the property keys inside the parent card rows. Clicking them hides or shows the downstream child sub-tree (edges and nodes), while keeping the parent card's properties list visible.
 - **Export Pre-Processing (SVG Bounds & Opacity Reset)**: Injected custom DOM manipulation steps right before rendering in `html-to-image`. This temporarily sets physical `width`/`height` attributes on all SVGs to prevent 0x0 canvas collapse bugs in browsers, and temporarily overrides all node/edge opacities to `1` to bypass any active relational dimming/hover states, ensuring exported images are clean, clear, and fully drawn.
+- **Cross-Platform CI/CD Hardening**: Configured GitHub Actions workflows to use `actions/setup-node@v4` with Node 22 (`FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true`) to resolve runner deprecation crashes. Replaced `npm ci` with `npm install` in the CI pipeline to dynamically fetch OS-specific optional dependencies, preventing lockfile mismatches when committing from Windows to an Ubuntu runner.
 
 ---
 
 ## 🔄 Current Pipeline State
-- **Active Step**: `@engineer` / `@devops` (Bug Fixing & Refinement)
-- **Last Updated**: 2026-05-30T09:53:00+09:00
-- **Current Objective**: Removed the hover relational dimming feature entirely and restored standard 100% visible nodes and edges styling to prevent lines from disappearing or exporting with low opacity.
+- **Current Objective**: Successfully deployed to GitHub Pages and resolved CI/CD runner crashes caused by Node deprecation and cross-platform lockfile mismatches.
 
 ---
 
@@ -58,7 +57,10 @@ This file serves as the persistent memory for the Antigravity development team. 
   - [x] Verified local build successfully (`npm run build` succeeds)
   - [x] Generated `.github/workflows/deploy.yml` for automated push deployment
   - [x] Implemented row-level connection handles, inline row collapses, and high-res diagram exports
-- [ ] **6. Production Deployment to GitHub Pages** (Owner: `User`)
+- [x] **6. Production Deployment to GitHub Pages** (Owner: `User` / `@devops`)
+  - [x] Pushed to GitHub and updated CI workflow for Node 24 compatibility
+  - [x] Replaced `npm ci` with `npm install` to avoid Windows/Ubuntu lockfile clashes
+  - [x] Live via user-configured Pages settings
 
 ---
 

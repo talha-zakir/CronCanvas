@@ -25,6 +25,7 @@ This log registers every major milestone, transition, and action completed by th
 | 2026-05-30T09:46 | @engineer | Root Container Export Capture | Shifted snapshot target from .react-flow__viewport to the root .react-flow container. Uses useReactFlow's fitView/setViewport to programmatically frame the canvas during snapshot. Preserves full DOM hierarchy, CSS positioning, and stylesheets. Verified build succeeds. |
 | 2026-05-30T09:50 | @engineer | Handle Sizing Restored | Restored default physical sizes to input/output handles (with opacity-0) to resolve a layout calculation bug where 0x0 element bounding boxes caused lines to drop off or fail to align in some export engines. Verified build succeeds. |
 | 2026-05-30T09:53 | @engineer | Relational Dimming Excised | Removed the hover relational dimming feature entirely, restoring nodes and edges to permanent 100% opacity to ensure lines render reliably and don't disappear in user exports. Verified build succeeds. |
+| 2026-05-30T10:50 | @devops | CI/CD Pages Deployment Fixed | Configured GitHub Actions to use Node 22 (`FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true`) to resolve deprecation crashes. Swapped `npm ci` for `npm install` to dynamically resolve cross-platform dependencies (preventing `@emnapi` lockfile errors from Windows-to-Ubuntu CI mismatches). |
 
 
 
