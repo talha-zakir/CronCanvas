@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
@@ -10,7 +11,7 @@ body {
   padding: 0;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
   background-color: #f8fafc;
   color: #334155;
   -webkit-font-smoothing: antialiased;
@@ -19,13 +20,12 @@ body {
 
 #root {
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
-/* Custom Scrollbar for code textarea & tables */
+/* Custom Scrollbar for textareas */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -43,49 +43,3 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
-
-/* Force high quality rendering and fallback styling of react-flow edges */
-.react-flow__edge-path {
-  stroke: #94a3b8 !important;
-  stroke-width: 2px !important;
-  fill: none !important;
-  shape-rendering: geometricPrecision !important;
-}
-
-/* 
-  CRITICAL EXPORT FIX:
-  React Flow locks the .react-flow__edges SVG dimensions to the screen size. 
-  During a high-res PNG export, this clips all lines outside the monitor's dimensions.
-  This forces the SVG container to expand fully and overflow safely.
-*/
-.react-flow__edges {
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  pointer-events: none !important;
-  overflow: visible !important;
-  z-index: 1 !important;
-}
-
-.react-flow__edge {
-  pointer-events: visibleStroke !important;
-}
-
-/* Custom dash animation (in case it is stripped by css purgers when unused) */
-@keyframes dashdraw {
-  from {
-    stroke-dashoffset: 10;
-  }
-}
-
-/* Interactive Edge Hover Animation */
-.react-flow__edge:hover path.react-flow__edge-path {
-  stroke-dasharray: 5 !important;
-  animation: dashdraw 0.5s linear infinite !important;
-  stroke: #8b5cf6 !important; /* violet-500 */
-  stroke-width: 3 !important;
-}
-
-
