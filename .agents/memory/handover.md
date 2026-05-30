@@ -5,39 +5,30 @@ This file serves as the persistent memory for the Antigravity development team. 
 ---
 
 ## 📌 Project Overview
-- **Goal / Description**: **JSONWeaver** — A privacy-first, 100% client-side data visualizer that transforms raw JSON, YAML, and CSV structures into beautiful, interactive node-link diagrams completely inside the browser.
-- **Selected Tech Stack**: Vite, React, TypeScript, Tailwind CSS v4, Dagre.js (directed layout engine), @xyflow/react (interactive React Flow v12 canvas), js-yaml, PapaParse, SVG edges, html-to-image.
+- **Goal / Description**: **Cron Canvas** — A client-side GitHub Pages utility app that allows users to easily visualize, edit, and translate Cron expressions into human-readable text and next execution patterns.
+- **Selected Tech Stack**: Vite, React, TypeScript, Tailwind CSS v4, `cronstrue` (for human-readable translations), `cron-parser` (for future executions).
 
 ---
 
 ## 🏛️ Architectural & Key Decisions
-- **Zero-Backend Design**: All data ingestion, parsing, layout computation, and rendering run entirely on the client side in the user's browser, ensuring absolute privacy and zero server costs.
-- **Vite + React + TS**: Chosen for near-instant client-side loading, simple module imports, and structured code.
-- **Tailwind CSS v4**: Set up using Vite's modern CSS-first `@tailwindcss/vite` plugin without tailwind.config files.
-- **@xyflow/react (React Flow)**: High-performance interactive canvas supporting zooming, dragging, and custom node render templates.
-- **Dagre.js Integration**: Automated, non-overlapping coordinates math for tree structures and nested acyclic graphs.
-- **Relative Base Asset Routing**: Configured `base: './'` in `vite.config.ts` to allow automatic relative resolution of resources when hosted on any subpath of GitHub Pages.
-- **Pastel Color Signature Coding**: Custom nodes automatically style their headers and borders using soft pastels according to their category (Root = Indigo, Array = Sky, Object = Orange/Coral) for enhanced tree readability.
-- **Interactive Theme Preset Customization**: Built 5 soft pastel background theme presets (Slate, Cream, Sage, Lavender, Mint) selectable from a clean panel.
-- **Base64 State Sharing Links**: Serializes current diagram text & format selection using base64 encoded URL hashes, allowing direct state restoration on reload without database requirements.
-- **Graph Query Search Bar**: Real-time canvas filter mapping matching query strings to node titles, keys, and values, and highlighting matching items dynamically.
-- **JSON Path Tooltips**: Property rows support native hover tooltips tracking the absolute JSON Path (e.g. `$.meta.version`) computed during recursion.
-- **High-Res Diagram Snapshots**: Rewrote export logic to capture the internal `.react-flow__viewport` directly using `getViewportForBounds()`. This bypasses browser-level scaling artifacts and guarantees perfectly sharp geometric SVG edges at 2x density.
-- **Geometric Edge Snapping**: Stripped default React Flow padding and minimum dimensions from connection Handles, forcing a mathematical 0x0 singularity offset to `-1px`. Lines now sit perfectly flush against the card borders.
-- **Locked Horizontal Layout**: Eradicated the Top-to-Bottom directional toggle. Graph structures inherently merge relationship lineages when forced vertically; the engine is now strictly locked to Left-to-Right layout for maximum clarity.
-- **Clean Connections (Removed Duplicate Edge Text)**: Removed duplicate edge labels along linking SVG lines, leaving names strictly in node card headers to avoid clutter.
-- **HTML Font Loading**: Moved Google Font imports into `index.html` headers to prevent cross-origin stylesheet resolution bugs in SVG snapshots, ensuring text renders in the selected fonts.
-- **Row-Level Handle Connections**: Outgoing connection lines originate directly from the specific property key row's handle (`sourceHandle`) inside parent cards, rather than central node points. This maps exactly which nested object belongs to which key.
-- **Row-Level Collapse Triggers**: Expand/collapse toggle buttons (`+` / `−`) are placed directly next to the property keys inside the parent card rows. Clicking them hides or shows the downstream child sub-tree (edges and nodes), while keeping the parent card's properties list visible.
-- **Export Pre-Processing (SVG Bounds & Opacity Reset)**: Injected custom DOM manipulation steps right before rendering in `html-to-image`. This temporarily sets physical `width`/`height` attributes on all SVGs to prevent 0x0 canvas collapse bugs in browsers, and temporarily overrides all node/edge opacities to `1` to bypass any active relational dimming/hover states, ensuring exported images are clean, clear, and fully drawn.
-- **Cross-Platform CI/CD Hardening**: Configured GitHub Actions workflows to use `actions/setup-node@v4` with Node 22 (`FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true`) to resolve runner deprecation crashes. Replaced `npm ci` with `npm install` in the CI pipeline to dynamically fetch OS-specific optional dependencies, preventing lockfile mismatches when committing from Windows to an Ubuntu runner.
+- **Zero-Backend Design**: Fully client-side execution to run easily on GitHub Pages.
+- **Vite + React + TS**: Fast rendering and structured architecture.
+- **Tailwind CSS v4**: Utility-first styling with `@custom-variant dark` configured for seamless Dark/Light mode overrides.
+- **Interactive Derived State**: Leveraging `React.useMemo` to natively parse, translate, and compute future schedules without triggering ESLint cascading update warnings (avoiding unnecessary `useEffect` calls).
+- **Core Features**: 
+  - Real-time Human Translation
+  - Next 5 Execution Predictor (natively uses local browser timezone)
+  - Interactive Tabbed Builder (Minute, Hour, Day, Month, Weekday)
+  - Code Snippets Export Panel (GitHub Actions, Node, Linux)
+  - Local Storage History (Last 5 valid expressions)
+  - Quick Recipe Templates
 
 ---
 
 ## 🔄 Current Pipeline State
-- **Active Step**: `@engineer` (Portfolio Integration)
-- **Last Updated**: 2026-05-30T15:56:00+09:00
-- **Current Objective**: Standalone project completion and integration. Generated a drop-in React component `jsonweaver_portfolio_card.tsx` so the user can showcase this tool on their primary portfolio website.
+- **Active Step**: `@devops` (GitHub Actions Push)
+- **Last Updated**: 2026-05-30T17:05:00+09:00
+- **Current Objective**: Standalone project completion and integration. Features finalized, unused variables/tooltips removed, and code pushed directly to `https://github.com/talha-zakir/CronCanvas.git`.
 
 ---
 
@@ -45,44 +36,31 @@ This file serves as the persistent memory for the Antigravity development team. 
 - [x] **1. Requirements & Spec Drafting** (Owner: `@pm`)
 - [x] **2. Specification Approval** (Owner: `User`)
 - [x] **3. Scaffolding & Code Generation** (Owner: `@engineer` / `@designer`)
-  - [x] Base Vite/React/TS app setup
-  - [x] Installed parsing, layout, and visualization libraries (@xyflow/react, dagre, js-yaml, papaparse, html-to-image)
-  - [x] Configured Tailwind CSS v4 with Vite integration
-  - [x] Created parser layers (`src/utils/parser.ts`) and dagre engine (`src/utils/layout.ts`)
-  - [x] Implemented UI viewpanels (`App.tsx`, `EditorPanel.tsx`, `CustomNode.tsx`, `GraphCanvas.tsx`)
-- [x] **4. Bug Hunting & Security Audit** (Owner: `@qa`)
-  - [x] Addressed tsconfig verbatimModuleSyntax strict imports
-  - [x] Resolved React Flow Generic Node type conflicts
-  - [x] Fixed PNG export SecurityError (CORS) from cross-origin stylesheets (Google Fonts / extensions)
-  - [x] Restored correct viewport size on export clone and guaranteed fallback edge path styles
-- [x] **5. Local Hosting & Testing** (Owner: `@devops`)
-  - [x] Verified local build successfully (`npm run build` succeeds)
-  - [x] Generated `.github/workflows/deploy.yml` for automated push deployment
-  - [x] Implemented row-level connection handles, inline row collapses, and high-res diagram exports
-- [x] **6. Production Deployment to GitHub Pages** (Owner: `User` / `@devops`)
-  - [x] Pushed to GitHub and updated CI workflow for Node 24 compatibility
-  - [x] Replaced `npm ci` with `npm install` to avoid Windows/Ubuntu lockfile clashes
-  - [x] Live via user-configured Pages settings
-- [x] **7. Portfolio Integration** (Owner: `@engineer`)
-  - [x] Cloned host portfolio to extract target Tailwind classes
-  - [x] Generated `jsonweaver_portfolio_card.tsx` as a drop-in component
+  - [x] Bootstrapped App.tsx with Vite & Tailwind
+  - [x] Integrated `cronstrue` and `cron-parser`
+- [x] **4. Feature Refinement** (Owner: `@engineer`)
+  - [x] Added Dark Mode using `localStorage` and `index.css` variants
+  - [x] Built Code Export Snippet Generator
+  - [x] Added History and Recipes features
+  - [x] Simplified Executions panel (removed manual timezone selector)
+- [x] **5. QA and Bug Fixing** (Owner: `@qa`)
+  - [x] Resolved React Hook `useEffect` issues by migrating to `useMemo`
+  - [x] Fixed Tailwind CSS v4 class-based dark mode
+  - [x] Fixed tooltip z-index and clipping bugs, then removed tooltips per user request
+  - [x] Ensured TypeScript compiler builds without warnings
+- [x] **6. Production Deployment to GitHub Pages** (Owner: `@devops`)
+  - [x] Pushed code directly to remote `https://github.com/talha-zakir/CronCanvas.git`
 
 ---
 
 ## 🛠️ Modified Files & Structure
-- `app_build/package.json`: Dependency manifests (includes html-to-image)
-- `app_build/vite.config.ts`: Vite bundler configuration (with Tailwind plugin & base routing)
-- `app_build/index.html`: Preconnected Google Fonts and title variables (added crossorigin to link tags)
-- `app_build/src/index.css`: Stylesheet with Tailwind CSS v4 imports (added fallback edge styling and corrected viewport overflow sizing)
-- `app_build/src/utils/parser.ts`: JSON/YAML/CSV structure mapping engine with pathing, collapsible filters, and parent-child link tracking
-- `app_build/src/utils/layout.ts`: Dagre graph positioning coordinates layout engine
-- `app_build/src/components/CustomNode.tsx`: Syntax-colored grid renderer with type-coded pastel headers, row-level handles, JSON Path tooltips, and inline branch expand/collapse toggles
-- `app_build/src/components/GraphCanvas.tsx`: Interactive zoom/pan viewport with theme selection presets, search integration, fitView bindings, and high-res image exporter (wrapped in withSafeExport utility)
-- `app_build/src/components/EditorPanel.tsx`: Code input editor with syntax checker
-- `app_build/src/App.tsx`: Main interface orchestrator with state sharing hooks, header query bar, and collapsible tracking arrays wrapped in ReactFlowProvider
-- `.github/workflows/deploy.yml`: GitHub Actions reusable deployment workflow
+- `app_build/package.json`: Contains project dependencies
+- `app_build/vite.config.ts`: Configured `base: '/cron-canvas/'` for GitHub pages subpath routing
+- `app_build/src/App.tsx`: Main unified React logic incorporating builder tabs, inputs, state retention, formatting, and translation
+- `app_build/src/index.css`: Contains custom `@custom-variant dark` initialization.
+- `.agents/memory/handover.md`: Refreshed to track Cron Canvas project.
 
 ---
 
 ## ⚠️ Known Issues / Next Actions
-1. **NEXT**: The user has successfully integrated JSONWeaver. Project is fully deployed and the session is ready to be closed or resumed via `/resume` later.
+1. **NEXT**: The user has successfully pushed CronCanvas to the git remote. The project is fully deployed and the session is ready to be closed or resumed via `/resume` later.
