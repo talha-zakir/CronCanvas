@@ -35,7 +35,9 @@ This file serves as the persistent memory for the Antigravity development team. 
 ---
 
 ## 🔄 Current Pipeline State
-- **Current Objective**: Successfully deployed to GitHub Pages and resolved CI/CD runner crashes caused by Node deprecation and cross-platform lockfile mismatches.
+- **Active Step**: `@engineer` (Portfolio Integration)
+- **Last Updated**: 2026-05-30T15:56:00+09:00
+- **Current Objective**: Standalone project completion and integration. Generated a drop-in React component `jsonweaver_portfolio_card.tsx` so the user can showcase this tool on their primary portfolio website.
 
 ---
 
@@ -61,6 +63,9 @@ This file serves as the persistent memory for the Antigravity development team. 
   - [x] Pushed to GitHub and updated CI workflow for Node 24 compatibility
   - [x] Replaced `npm ci` with `npm install` to avoid Windows/Ubuntu lockfile clashes
   - [x] Live via user-configured Pages settings
+- [x] **7. Portfolio Integration** (Owner: `@engineer`)
+  - [x] Cloned host portfolio to extract target Tailwind classes
+  - [x] Generated `jsonweaver_portfolio_card.tsx` as a drop-in component
 
 ---
 
@@ -80,4 +85,4 @@ This file serves as the persistent memory for the Antigravity development team. 
 ---
 
 ## ⚠️ Known Issues / Next Actions
-1. **NEXT**: The user has been presented with the completed PNG export fix. Ready for deployment or further UI/UX improvements.
+1. **NEXT**: The user has successfully integrated JSONWeaver. Project is fully deployed and the session is ready to be closed or resumed via `/resume` later.

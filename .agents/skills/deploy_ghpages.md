@@ -30,3 +30,6 @@ Your goal as DevOps is to package the static application/game and deploy it to G
 
 4. **Report**:
    - Output the live production GitHub Pages URL (e.g., `https://<username>.github.io/<repository-name>`) and instruct the user to push to Git or verify the deployed site.
+
+5. **Generate Portfolio Integration Card**:
+   - Always run the `generate_portfolio_card.md` skill immediately after deployment to generate the JSX component so the user can easily feature the deployed app on their primary website.
