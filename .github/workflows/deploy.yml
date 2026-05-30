@@ -41,7 +41,7 @@ jobs:
           cache-dependency-path: app_build/package-lock.json
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
         working-directory: app_build
 
       - name: Build
