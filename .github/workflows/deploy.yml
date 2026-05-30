@@ -2,7 +2,7 @@
 name: Deploy to GitHub Pages
 
 on:
-  # Runs on pushes targeting the default branch (usually 'main' or 'master')
+  # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
 
@@ -15,14 +15,15 @@ permissions:
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# Do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+# Allow only one concurrent deployment
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
-  # Single deploy job, since we're just deploying static files
   deploy:
     environment:
       name: github-pages
@@ -35,14 +36,12 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
-          # Path to lock file for caching. Update this if you change your build target directory!
           cache-dependency-path: app_build/package-lock.json
 
       - name: Install dependencies
         run: npm ci
-        # Runs npm ci inside the build directory. Change 'app_build' if your target folder changes.
         working-directory: app_build
 
       - name: Build
@@ -50,12 +49,11 @@ jobs:
         working-directory: app_build
 
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload the static built files. Change this if your build target output folder changes.
           path: './app_build/dist'
 
       - name: Deploy to GitHub Pages
